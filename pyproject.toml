@@ -6,6 +6,7 @@ build-backend = "hatchling.build"
 name = "undertow-workbench"
 version = "0.1.0"
 description = "Evidence-first Kafka consumer incident timelines for Sentry Arroyo"
+readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 authors = [{name = "Ivan Balkashynov"}]

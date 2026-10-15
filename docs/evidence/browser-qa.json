@@ -15,14 +15,14 @@
     "downloaded self-contained HTML asset checks",
     "mobile 390x844 viewport with no document overflow",
     "64-consumer case and single-worker timeline filtering",
-    "no browser console warnings or errors during local checks"
+    "no browser console warnings or errors during local checks",
+    "published GitHub Pages landing and recorded incident viewer; no console warnings or errors"
   ],
   "mobile_document_width": 375,
   "mobile_scroll_width": 375,
-  "pending": [
-    "published demo browser check"
-  ],
+  "pending": [],
   "limitations": [
     "The automation browser permits only HTTP(S), so file:// execution of the standalone HTML could not be tested. Self-contained asset checks and offline export tests passed."
-  ]
+  ],
+  "published_origin": "https://balkashynov.github.io/undertow/"
 }

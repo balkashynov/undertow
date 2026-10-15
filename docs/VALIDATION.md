@@ -50,7 +50,9 @@ The browser's separate 64-consumer case exercises navigation and filtering. Larg
 
 Browser QA covers the landing page, real-case navigation, source inspection, comparison, unknown/incomplete controls, raw-log import, inert script-tag text, local persistence and downloaded exports. At a 390×844 viewport the document had no horizontal overflow; timeline and case strips can scroll independently. [Browser evidence checklist](evidence/browser-qa.json).
 
-The distribution includes a wheel and source archive. The wheel contains the viewer and recorded cases; the source archive excludes private contact notes, virtual environments, local incident storage and Sites credentials. Install and CLI export are checked in a clean environment. Hosted CI additionally checks Linux/macOS core behavior and runs a fresh Linux Kafka lab; consult the actual workflow status for the current revision rather than inferring it from this local report.
+The distribution includes a wheel and source archive. The wheel contains the viewer and recorded cases; the source archive excludes private contact notes, virtual environments, local incident storage and Sites credentials. Install and CLI export are checked in a clean environment. [Hosted CI passed](https://github.com/balkashynov/undertow/actions/runs/38782644998) on the initial implementation revision: Linux Python 3.11 and 3.13, macOS Python 3.12, package builds, JavaScript syntax and a fresh Linux Kafka lab. The public GitHub Pages viewer was also opened and checked in the browser with no console errors. Consult current workflow status for later revisions.
+
+Direct `file://` playback could not be tested because the automation browser only permits HTTP(S). The generated HTML passed self-contained asset and embedding checks, and the same embedded viewer engine passed cross-runtime parity tests.
 
 ## Boundaries
 

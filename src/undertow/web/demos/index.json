@@ -1,0 +1,30 @@
+[
+  {
+    "label": "01 \u00b7 The slow strategy join",
+    "path": "demos/slow-drain.json"
+  },
+  {
+    "label": "02 \u00b7 Healthy rebalance",
+    "path": "demos/baseline.json"
+  },
+  {
+    "label": "03 \u00b7 Crash and replacement",
+    "path": "demos/crash.json"
+  },
+  {
+    "label": "04 \u00b7 Auto-commit ambiguity",
+    "path": "demos/auto.json"
+  },
+  {
+    "label": "05 \u00b7 Native logs only",
+    "path": "demos/native-only.json"
+  },
+  {
+    "label": "06 \u00b7 Incomplete evidence",
+    "path": "demos/truncated.json"
+  },
+  {
+    "label": "07 \u00b7 64-consumer scale control",
+    "path": "demos/scale-64.json"
+  }
+]

@@ -1,0 +1,59 @@
+{
+  "scenario": "slow-drain",
+  "producer_acks": 96,
+  "unique_processed_ids": 96,
+  "duplicate_processing_observations": 0,
+  "missing_ids": [],
+  "broker_next_offsets": [
+    {
+      "partition": 0,
+      "offset": 16
+    },
+    {
+      "partition": 1,
+      "offset": 16
+    },
+    {
+      "partition": 2,
+      "offset": 16
+    },
+    {
+      "partition": 3,
+      "offset": 16
+    },
+    {
+      "partition": 4,
+      "offset": 16
+    },
+    {
+      "partition": 5,
+      "offset": 16
+    }
+  ],
+  "max_observed_join_ms": 3015,
+  "injected_delay_ms": 3000,
+  "independent_delay_measurements_ms": [
+    3004.225165990647
+  ],
+  "counts": {
+    "start": 3,
+    "assign": 6,
+    "note": 47,
+    "strategy_ready": 8,
+    "processed": 96,
+    "revoke": 5,
+    "drain_start": 8,
+    "commit_confirmed": 4,
+    "commit_attempt": 15,
+    "drain_end": 8,
+    "revoked": 5,
+    "stuck": 1,
+    "stop": 3
+  },
+  "rejected_lines": 0,
+  "source_sha256": {
+    "consumer-a.jsonl": "52ee67a215984d179a17835ff8049c474c11939560c49c9edadc746688d186b3",
+    "consumer-b.jsonl": "e8bbc8c350723c8dd065a8ae3aa7cd9ab129831b49e1994b026aac3c5b827303",
+    "consumer-c.jsonl": "51464f04e5c469e0e205c702bc75f4e2873a93b0d7f04addd291170a605c38ec"
+  }
+}

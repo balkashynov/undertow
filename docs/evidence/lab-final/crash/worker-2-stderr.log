@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<checkout>/scripts/lab_worker.py", line 94, in <module>
+    processor.run()
+  File "<checkout>/.venv/lib/python3.12/site-packages/arroyo/processing/processor.py", line 351, in run
+    self._run_once()
+  File "<checkout>/.venv/lib/python3.12/site-packages/arroyo/processing/processor.py", line 476, in _run_once
+    self.__processing_strategy.submit(message)
+  File "<checkout>/scripts/lab_worker.py", line 63, in submit
+    def submit(self,message):self.inner.submit(message)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/.venv/lib/python3.12/site-packages/arroyo/processing/strategies/guard.py", line 82, in submit
+    self.__inner_strategy.submit(message)
+  File "<checkout>/.venv/lib/python3.12/site-packages/arroyo/processing/strategies/run_task.py", line 70, in submit
+    result = self.__function(cast(Message[TStrategyPayload], message))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<checkout>/scripts/lab_worker.py", line 80, in process
+    raise RuntimeError('Deliberate lab processing failure; synthetic workload only')
+RuntimeError: Deliberate lab processing failure; synthetic workload only

@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "undertow-workbench"
+version = "0.1.0"
+description = "Evidence-first Kafka consumer incident timelines for Sentry Arroyo"
+requires-python = ">=3.11"
+license = "Apache-2.0"
+authors = [{name = "Ivan Balkashynov"}]
+dependencies = []
+
+[project.optional-dependencies]
+lab = ["sentry-arroyo==2.46.0", "confluent-kafka==2.16.0"]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+undertow = "undertow.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/undertow"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

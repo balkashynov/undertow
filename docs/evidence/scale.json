@@ -1,0 +1,12 @@
+{
+  "type": "synthetic-parser-scale",
+  "records": 100000,
+  "consumers": 64,
+  "input_bytes": 9999999,
+  "input_sha256": "f9e39c4e1b24cadbf047b47eeea73303c90cccca6a3e451b54bcec33c49c6ea3",
+  "parse_and_analyze_seconds": 0.779,
+  "process_peak_rss_bytes": 225509376,
+  "python": "3.12.11",
+  "platform": "Darwin arm64",
+  "limits": "Single warm local process; includes synthetic input construction in process RSS, excludes browser rendering; not a Kafka throughput result."
+}

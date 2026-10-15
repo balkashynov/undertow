@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="530" viewBox="0 0 1200 530" role="img" aria-labelledby="title desc"><title id="title">Undertow recorded consumer timeline</title><desc id="desc">Real local Kafka capture, with observed assignment and revocation intervals for three consumers.</desc><rect width="1200" height="530" rx="16" fill="#f5f4ef"/><rect x="24" y="24" width="1152" height="482" rx="10" fill="#fff" stroke="#d9ded7"/>
+<text x="52" y="68" font-family="sans-serif" font-size="26" fill="#172627" font-weight="700">≈ undertow</text>
+<text x="830" y="65" font-family="monospace" font-size="11" fill="#187d70" font-weight="400">RECORDED LOCAL EXECUTION</text>
+<text x="52" y="122" font-family="sans-serif" font-size="30" fill="#172627" font-weight="500">The three-second strategy join</text>
+<text x="52" y="151" font-family="sans-serif" font-size="12" fill="#677271" font-weight="400">Apache Kafka 4.1.0 · Arroyo 2.46.0 · synthetic workload</text>
+<line x1="230" x2="230" y1="195" y2="380" stroke="#e5eade"/>
+<text x="222" y="184" font-family="monospace" font-size="10" fill="#889480" font-weight="400">0.00s</text>
+<line x1="410" x2="410" y1="195" y2="380" stroke="#e5eade"/>
+<text x="402" y="184" font-family="monospace" font-size="10" fill="#889480" font-weight="400">1.08s</text>
+<line x1="590" x2="590" y1="195" y2="380" stroke="#e5eade"/>
+<text x="582" y="184" font-family="monospace" font-size="10" fill="#889480" font-weight="400">2.15s</text>
+<line x1="770" x2="770" y1="195" y2="380" stroke="#e5eade"/>
+<text x="762" y="184" font-family="monospace" font-size="10" fill="#889480" font-weight="400">3.23s</text>
+<line x1="950" x2="950" y1="195" y2="380" stroke="#e5eade"/>
+<text x="942" y="184" font-family="monospace" font-size="10" fill="#889480" font-weight="400">4.31s</text>
+<line x1="1130" x2="1130" y1="195" y2="380" stroke="#e5eade"/>
+<text x="1122" y="184" font-family="monospace" font-size="10" fill="#889480" font-weight="400">5.38s</text>
+<text x="52" y="235" font-family="monospace" font-size="13" fill="#172627" font-weight="400">consumer-a</text>
+<rect x="409.70" y="215" width="697.40" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="409.70" y="215" width="697.40" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="1086.37" y="215" width="20.73" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="1107.10" y="212" width="2.00" height="34" rx="4" fill="#ead4b7"/>
+<circle cx="409.70" cy="229" r="4" fill="#187d70" stroke="#fff"/>
+<circle cx="1086.37" cy="229" r="4" fill="#187d70" stroke="#fff"/>
+<circle cx="1107.10" cy="229" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="1107.10" cy="229" r="4" fill="#af804d" stroke="#fff"/>
+<text x="52" y="290" font-family="monospace" font-size="13" fill="#172627" font-weight="400">consumer-b</text>
+<rect x="242.37" y="270" width="885.29" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="242.37" y="270" width="885.29" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="242.37" y="270" width="173.51" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="242.37" y="270" width="2.00" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="242.37" y="270" width="2.00" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="242.37" y="270" width="2.00" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="1090.72" y="270" width="36.94" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="243.71" y="267" width="2.00" height="34" rx="4" fill="#ead4b7"/>
+<rect x="415.88" y="267" width="504.16" height="34" rx="4" fill="#ead4b7"/>
+<rect x="1127.66" y="267" width="2.00" height="34" rx="4" fill="#ead4b7"/>
+<circle cx="242.37" cy="284" r="4" fill="#187d70" stroke="#fff"/>
+<circle cx="243.71" cy="284" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="245.04" cy="284" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="415.88" cy="284" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="736.50" cy="284" r="4" fill="#be524d" stroke="#fff"/>
+<circle cx="920.04" cy="284" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="1090.72" cy="284" r="4" fill="#187d70" stroke="#fff"/>
+<circle cx="1127.66" cy="284" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="1127.66" cy="284" r="4" fill="#af804d" stroke="#fff"/>
+<text x="52" y="345" font-family="monospace" font-size="13" fill="#172627" font-weight="400">consumer-c</text>
+<rect x="296.03" y="325" width="705.76" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="971.70" y="325" width="30.09" height="28" rx="4" fill="#dbe8ce" opacity=".7"/>
+<rect x="1001.79" y="322" width="2.00" height="34" rx="4" fill="#ead4b7"/>
+<circle cx="296.03" cy="339" r="4" fill="#187d70" stroke="#fff"/>
+<circle cx="971.70" cy="339" r="4" fill="#187d70" stroke="#fff"/>
+<circle cx="1001.79" cy="339" r="4" fill="#af804d" stroke="#fff"/>
+<circle cx="1001.79" cy="339" r="4" fill="#af804d" stroke="#fff"/>
+<line x1="52" x2="1128" y1="399" y2="399" stroke="#d9ded7"/>
+<text x="52" y="433" font-family="monospace" font-size="11" fill="#677271" font-weight="400">OBSERVED STRATEGY JOIN</text>
+<text x="52" y="472" font-family="sans-serif" font-size="28" fill="#172627" font-weight="600">3.015s</text>
+<text x="300" y="433" font-family="monospace" font-size="11" fill="#677271" font-weight="400">SOURCE-LEVEL EVIDENCE</text>
+<text x="300" y="465" font-family="sans-serif" font-size="13" fill="#172627" font-weight="400">Native logs + explicitly labeled instrumentation</text>
+<text x="790" y="433" font-family="monospace" font-size="11" fill="#677271" font-weight="400">INTERPRETATION</text>
+<text x="790" y="465" font-family="sans-serif" font-size="13" fill="#172627" font-weight="400">An observed callback, not global stability.</text>
+</svg>

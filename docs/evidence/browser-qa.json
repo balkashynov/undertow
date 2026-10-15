@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-15",
+  "local_origin": "http://127.0.0.1:8767",
+  "verified": [
+    "landing render",
+    "recorded case navigation",
+    "slow-join source inspection",
+    "baseline comparison",
+    "native-only unknown signals",
+    "incomplete callback controls",
+    "raw JSONL import",
+    "literal script-tag text rendering",
+    "saved incident library",
+    "downloaded pseudonymized JSON checks",
+    "downloaded self-contained HTML asset checks",
+    "mobile 390x844 viewport with no document overflow",
+    "64-consumer case and single-worker timeline filtering",
+    "no browser console warnings or errors during local checks"
+  ],
+  "mobile_document_width": 375,
+  "mobile_scroll_width": 375,
+  "pending": [
+    "published demo browser check"
+  ],
+  "limitations": [
+    "The automation browser permits only HTTP(S), so file:// execution of the standalone HTML could not be tested. Self-contained asset checks and offline export tests passed."
+  ]
+}

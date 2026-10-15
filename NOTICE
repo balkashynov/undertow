@@ -1,0 +1,9 @@
+Undertow
+Copyright 2026 Ivan Balkashynov
+
+This independent project integrates with Sentry Arroyo and Apache Kafka.
+Arroyo is copyright Sentry and its contributors, licensed under Apache-2.0.
+Kafka is an Apache Software Foundation project licensed under Apache-2.0.
+Upstream dependencies are installed separately, not vendored into this source tree.
+Native log patterns and their interpretation are linked to pinned upstream source.
+No endorsement by Sentry or the Apache Software Foundation is implied.

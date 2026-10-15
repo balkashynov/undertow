@@ -1,0 +1,239 @@
+{
+  "image": "apache/kafka:4.1.0@sha256:bff074a5d0051dbc0bbbcd25b045bb1fe84833ec0d3c7c965d1797dd289ec88f",
+  "results": [
+    {
+      "scenario": "baseline",
+      "producer_acks": 96,
+      "unique_processed_ids": 96,
+      "duplicate_processing_observations": 0,
+      "missing_ids": [],
+      "broker_next_offsets": [
+        {
+          "partition": 0,
+          "offset": 16
+        },
+        {
+          "partition": 1,
+          "offset": 16
+        },
+        {
+          "partition": 2,
+          "offset": 16
+        },
+        {
+          "partition": 3,
+          "offset": 16
+        },
+        {
+          "partition": 4,
+          "offset": 16
+        },
+        {
+          "partition": 5,
+          "offset": 16
+        }
+      ],
+      "max_observed_join_ms": 15,
+      "injected_delay_ms": 0,
+      "independent_delay_measurements_ms": [],
+      "counts": {
+        "start": 3,
+        "assign": 3,
+        "note": 36,
+        "strategy_ready": 6,
+        "processed": 96,
+        "revoke": 6,
+        "drain_start": 6,
+        "commit_confirmed": 5,
+        "commit_attempt": 15,
+        "drain_end": 6,
+        "revoked": 6,
+        "stop": 3
+      },
+      "rejected_lines": 0,
+      "source_sha256": {
+        "consumer-a.jsonl": "28bdbdfffac4784c68c54eaedb1839bb862e92ffdfe767dcb802738f7cfb2dda",
+        "consumer-b.jsonl": "d049bb3e5e03a8bc87db28fa204b5102f7994c865010a474e7dfd2d7de2babfd",
+        "consumer-c.jsonl": "f7a263392791b4c4bbf28f4f428e33415be04fe226b8c1541138fd652e6bb993"
+      }
+    },
+    {
+      "scenario": "slow-drain",
+      "producer_acks": 96,
+      "unique_processed_ids": 96,
+      "duplicate_processing_observations": 0,
+      "missing_ids": [],
+      "broker_next_offsets": [
+        {
+          "partition": 0,
+          "offset": 16
+        },
+        {
+          "partition": 1,
+          "offset": 16
+        },
+        {
+          "partition": 2,
+          "offset": 16
+        },
+        {
+          "partition": 3,
+          "offset": 16
+        },
+        {
+          "partition": 4,
+          "offset": 16
+        },
+        {
+          "partition": 5,
+          "offset": 16
+        }
+      ],
+      "max_observed_join_ms": 3015,
+      "injected_delay_ms": 3000,
+      "independent_delay_measurements_ms": [
+        3004.225165990647
+      ],
+      "counts": {
+        "start": 3,
+        "assign": 6,
+        "note": 47,
+        "strategy_ready": 8,
+        "processed": 96,
+        "revoke": 5,
+        "drain_start": 8,
+        "commit_confirmed": 4,
+        "commit_attempt": 15,
+        "drain_end": 8,
+        "revoked": 5,
+        "stuck": 1,
+        "stop": 3
+      },
+      "rejected_lines": 0,
+      "source_sha256": {
+        "consumer-a.jsonl": "52ee67a215984d179a17835ff8049c474c11939560c49c9edadc746688d186b3",
+        "consumer-b.jsonl": "e8bbc8c350723c8dd065a8ae3aa7cd9ab129831b49e1994b026aac3c5b827303",
+        "consumer-c.jsonl": "51464f04e5c469e0e205c702bc75f4e2873a93b0d7f04addd291170a605c38ec"
+      }
+    },
+    {
+      "scenario": "crash",
+      "producer_acks": 96,
+      "unique_processed_ids": 96,
+      "duplicate_processing_observations": 0,
+      "missing_ids": [],
+      "broker_next_offsets": [
+        {
+          "partition": 0,
+          "offset": 16
+        },
+        {
+          "partition": 1,
+          "offset": 16
+        },
+        {
+          "partition": 2,
+          "offset": 16
+        },
+        {
+          "partition": 3,
+          "offset": 16
+        },
+        {
+          "partition": 4,
+          "offset": 16
+        },
+        {
+          "partition": 5,
+          "offset": 16
+        }
+      ],
+      "max_observed_join_ms": 11,
+      "injected_delay_ms": 0,
+      "independent_delay_measurements_ms": [],
+      "counts": {
+        "start": 4,
+        "assign": 7,
+        "note": 51,
+        "strategy_ready": 9,
+        "processed": 96,
+        "revoke": 6,
+        "drain_start": 8,
+        "commit_confirmed": 4,
+        "commit_attempt": 11,
+        "drain_end": 8,
+        "revoked": 6,
+        "crash": 1,
+        "stop": 4
+      },
+      "rejected_lines": 0,
+      "source_sha256": {
+        "consumer-a.jsonl": "f07be49ebd784d7ebc6a224b9c8c8768aec5796c72f57904756ffbe667d29af5",
+        "consumer-b.jsonl": "fb76e9464f635156fbe9061b18b21bba4701013dd8bbc69810731ae7e6c2471c",
+        "consumer-c.jsonl": "e38a5a368645a1157b301a7ef053006b13b740e04686b7802defde9cfd0bd36a",
+        "consumer-c-restarted.jsonl": "605e3a06ae895fafc4c04620639b5f135a87e216a9553e726ffceb23e7c5a071"
+      }
+    },
+    {
+      "scenario": "auto",
+      "producer_acks": 96,
+      "unique_processed_ids": 96,
+      "duplicate_processing_observations": 0,
+      "missing_ids": [],
+      "broker_next_offsets": [
+        {
+          "partition": 0,
+          "offset": 16
+        },
+        {
+          "partition": 1,
+          "offset": 16
+        },
+        {
+          "partition": 2,
+          "offset": 16
+        },
+        {
+          "partition": 3,
+          "offset": 16
+        },
+        {
+          "partition": 4,
+          "offset": 16
+        },
+        {
+          "partition": 5,
+          "offset": 16
+        }
+      ],
+      "max_observed_join_ms": 0,
+      "injected_delay_ms": 0,
+      "independent_delay_measurements_ms": [],
+      "counts": {
+        "start": 3,
+        "assign": 5,
+        "note": 41,
+        "strategy_ready": 7,
+        "processed": 96,
+        "revoke": 5,
+        "drain_start": 7,
+        "commit_attempt": 10,
+        "drain_end": 7,
+        "revoked": 5,
+        "stop": 3
+      },
+      "rejected_lines": 0,
+      "source_sha256": {
+        "consumer-a.jsonl": "8a6cf744348eedf07547ad4e9c9cdacbe4593bdd846c492ec479adc6824faff2",
+        "consumer-b.jsonl": "633ccc99e5eeac307da5aa09720b277d1c0fe4f7ad67792c09b60855d1724982",
+        "consumer-c.jsonl": "614a76a8c43008ad8afc772e413fd319f1dc41d2cd94d3a5862a4a7bdbdcc7c7"
+      }
+    }
+  ],
+  "limits": [
+    "Single local broker; no production Sentry systems",
+    "Synthetic workload; no throughput or availability claim",
+    "Python runtime only; KIP-848 consumer protocol",
+    "No power loss or network-partition simulation"
+  ]
+}

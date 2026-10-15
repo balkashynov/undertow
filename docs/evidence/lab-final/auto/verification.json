@@ -1,0 +1,55 @@
+{
+  "scenario": "auto",
+  "producer_acks": 96,
+  "unique_processed_ids": 96,
+  "duplicate_processing_observations": 0,
+  "missing_ids": [],
+  "broker_next_offsets": [
+    {
+      "partition": 0,
+      "offset": 16
+    },
+    {
+      "partition": 1,
+      "offset": 16
+    },
+    {
+      "partition": 2,
+      "offset": 16
+    },
+    {
+      "partition": 3,
+      "offset": 16
+    },
+    {
+      "partition": 4,
+      "offset": 16
+    },
+    {
+      "partition": 5,
+      "offset": 16
+    }
+  ],
+  "max_observed_join_ms": 0,
+  "injected_delay_ms": 0,
+  "independent_delay_measurements_ms": [],
+  "counts": {
+    "start": 3,
+    "assign": 5,
+    "note": 41,
+    "strategy_ready": 7,
+    "processed": 96,
+    "revoke": 5,
+    "drain_start": 7,
+    "commit_attempt": 10,
+    "drain_end": 7,
+    "revoked": 5,
+    "stop": 3
+  },
+  "rejected_lines": 0,
+  "source_sha256": {
+    "consumer-a.jsonl": "8a6cf744348eedf07547ad4e9c9cdacbe4593bdd846c492ec479adc6824faff2",
+    "consumer-b.jsonl": "633ccc99e5eeac307da5aa09720b277d1c0fe4f7ad67792c09b60855d1724982",
+    "consumer-c.jsonl": "614a76a8c43008ad8afc772e413fd319f1dc41d2cd94d3a5862a4a7bdbdcc7c7"
+  }
+}

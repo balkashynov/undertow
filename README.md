@@ -1,36 +1,67 @@
-<div align="center">
-
 # ≈ Undertow
 
-### Your consumers moved. Find what didn't.
+**Investigate Sentry Arroyo consumer incidents from one timeline.**
 
-**An evidence-first incident workbench for Kafka consumers and Sentry Arroyo.**
+Undertow combines logs from multiple Arroyo workers so an on-call engineer can see when partitions moved, which worker was draining its processing strategy, and what the capture cannot establish. Inspect the original log message and source line behind a timeline event, compare two captures, or export a portable incident report.
 
-[Explore the demo](https://balkashynov.github.io/undertow/) · [Run locally](#run-locally) · [Evidence contract](docs/CONTRACT.md) · [Validation](docs/VALIDATION.md)
+**[Open the recorded investigation](https://balkashynov.github.io/undertow/#workbench)** · [Run on your logs](#run-locally) · [Measured evidence](docs/VALIDATION.md) · [Release](https://github.com/balkashynov/undertow/releases/tag/v0.1.0)
 
-![Undertow investigation overview](docs/preview.svg)
+[![Verify Undertow](https://github.com/balkashynov/undertow/actions/workflows/ci.yml/badge.svg)](https://github.com/balkashynov/undertow/actions/workflows/ci.yml)
 
-</div>
+> **The example:** a real Arroyo worker takes **3.015 seconds** to join its processing strategy during a rebalance. Undertow identifies `consumer-b`, shows the surrounding partition transitions, and points to the native log lines behind the duration. The workload is synthetic; the Kafka broker, workers and captured logs are real.
 
-A consumer group rebalances. One worker is draining its processing strategy. Another has revoked its partitions. A third is waiting for work. Their individual logs do not explain the transition.
+[![Timeline rendered from the recorded local Kafka experiment: three consumers, a long revocation on consumer-b, and a 3.015-second strategy join. Click to open the interactive investigation.](docs/preview.svg)](https://balkashynov.github.io/undertow/#workbench)
 
-Undertow puts those observations on one timeline, keeps every conclusion connected to its source line, and makes the investigation portable. It is built around the concrete workflow requested in [Sentry Arroyo #461](https://github.com/getsentry/arroyo/issues/461).
+## Try the investigation in one minute
 
-Independent project by Ivan Balkashynov. No Sentry affiliation, endorsement, production deployment, or internal-tooling claim.
+No install, account or Kafka cluster needed. The [browser workbench](https://balkashynov.github.io/undertow/#workbench) opens **01 · The slow strategy join**.
 
-## What you can do
+1. Select the **STRATEGY DRAIN** finding showing **3.015s**. The inspector opens `consumer-b.jsonl:93`, the native `Waiting for ... to exit` message.
+2. Open **Compare captures** and select **02 · Healthy rebalance**. Compare the observed revocation duration with the delayed capture.
+3. Select **05 · Native logs only**, then **Timeline**. Processing and successful broker-commit timing become **unknown** because that evidence is absent.
 
-- **Investigate consumer transitions:** zoom and filter a multi-consumer timeline, inspect observed revocation callbacks, and trace partition ownership through partial cooperative rebalances.
-- **Find the evidence:** click an event or finding to inspect the original message, traceback, timestamp, source file and line. Search the full log with paginated results.
-- **Measure only supported facts:** strategy-join durations and revocation callback durations come from native logs. First processing and broker-commit timing require explicit instrumentation.
-- **Compare two captures:** view event counts, incomplete callbacks and observed timing differences without replacing unknown values with zero.
-- **Import your own data:** GCP LogEntry arrays, structured JSONL, documented plain logs, or an Undertow incident bundle. The local app saves cases on your computer.
-- **Share deliberately:** export complete JSON, pseudonymized JSON, a Mermaid sequence, or a self-contained interactive HTML file.
-- **Reproduce the demonstration:** run real Arroyo workers against a disposable, pinned Apache Kafka broker. All data is synthetic.
+The demo is a viewer over saved executions. It does not start a broker or replay a live incident. [Longer walkthrough and CLI usage](docs/USAGE.md).
+
+## When would you use it?
+
+Use Undertow when investigating a consumer restart, deployment or rebalance and the evidence is spread across worker logs:
+
+| Investigation question | What Undertow provides |
+| --- | --- |
+| Which worker spent time joining its strategy during revocation? | Measured callback/strategy intervals, the worker identity and the underlying log lines. |
+| Where did a partition move, including a partial cooperative rebalance? | Per-partition assignment epochs alongside consumer lifecycle events. |
+| Did processing or commits resume, or are those observations missing? | Explicitly labeled progress signals; missing evidence stays unknown. |
+| How can another engineer inspect the same incident? | An exported JSON bundle, pseudonymized case, Mermaid sequence or self-contained HTML report. |
+
+The project addresses the log-timeline workflow described in [Sentry Arroyo #461](https://github.com/getsentry/arroyo/issues/461). It works with exported evidence alongside existing metrics and log search. It does not require a change to the running consumer or access to a production Kafka cluster. Optional instrumentation adds processing and confirmed-commit observations that native logs do not supply.
+
+## What is implemented
+
+| Component | Working capability | Code / contract |
+| --- | --- | --- |
+| Parser and analyzer | GCP LogEntry arrays, JSONL and documented plain logs; bounded parsing, source references, partial revocations and incomplete-capture handling. | [Python core](src/undertow/core.py), [input contract](docs/CONTRACT.md) |
+| Interactive workbench | Consumer timeline, partition handoffs, evidence search and inspection, capture comparison, seven recorded/control cases. | [Browser UI](src/undertow/web/app.js), [analysis engine](src/undertow/web/engine.js) |
+| Local app and CLI | Raw-log import, persistent incident library, analysis, comparison and portable exports. Python 3.11+, zero third-party runtime dependencies. | [Server](src/undertow/server.py), [CLI](src/undertow/cli.py) |
+| Reproducible lab and checks | Real Kafka/Arroyo experiments, independent broker-offset checks, parser/server tests and Python/JavaScript analysis parity. | [Lab](scripts/lab.py), [tests](tests), [validation](docs/VALIDATION.md) |
+
+The hosted viewer accepts **Undertow JSON bundles**. Raw-log parsing, persistent storage and standalone HTML export run in the local app or CLI. Imported bundles are validated and their analysis is recomputed.
+
+## Evidence you can inspect
+
+The recorded lab uses **Apache Kafka 4.1.0 and Arroyo 2.46.0**, with six partitions and 96 message IDs per scenario.
+
+| Experiment or control | Recorded result |
+| --- | --- |
+| Healthy vs delayed strategy join | Longest join **0.015s vs 3.015s**. The delayed case injected a 3,000 ms sleep; an independent monotonic measurement recorded 3,004.225 ms. |
+| Healthy, delayed, crash/replacement and auto-commit runs | Each processed all 96 IDs; independently queried final broker next offsets were 16 on all six partitions. |
+| Native logs without progress instrumentation | First processing and confirmed-commit timing remain unknown. A commit-path DEBUG message is not proof of a broker commit. |
+| Capture truncated before the join completes | The callback remains incomplete; the analyzer does not invent a completion or diagnose a permanent stall. |
+
+[Raw logs and complete results](docs/evidence/lab-final) · [27 automated checks and validation limits](docs/VALIDATION.md) · [Current CI](https://github.com/balkashynov/undertow/actions/workflows/ci.yml)
+
+These are small local experiments with synthetic workloads. They establish the reported observations, not production loss rates or exactly-once guarantees. The separate 64-consumer navigation case is generated, not a 64-worker Kafka run.
 
 ## Run locally
-
-Python 3.11 or newer. The application itself has **zero third-party runtime dependencies**.
 
 ```bash
 git clone https://github.com/balkashynov/undertow
@@ -40,111 +71,39 @@ python3 -m venv .venv
 .venv/bin/undertow serve
 ```
 
-Open **http://127.0.0.1:8767/**. The server binds to loopback, checks the Host and Origin, and requires a per-session token for imports/exports. It has no upload service, telemetry, cloud account, or production Kafka connection. Imported cases are saved under `.undertow/cases/` in the working directory. Use `--data-dir /path/to/cases` to choose another folder.
+Open **http://127.0.0.1:8767/** and choose **Import capture**. Bring logs with explicit consumer identity and timestamps, or explore the included cases. Docker is only needed to rerun the lab.
 
-The hosted demo is a static browser viewer with seven prepared cases. It supports importing **Undertow JSON bundles**, comparison, JSON/pseudonymized export and Mermaid. Raw log parsing, the persistent library, and HTML export run in the local app or CLI.
+The server listens on loopback and keeps imported cases in `.undertow/cases/`. There is no upload service or telemetry. Use `--data-dir /path/to/cases` for a different library location. [Input formats, identity rules and CLI examples](docs/USAGE.md) · [Security and export privacy](SECURITY.md).
 
-## A three-minute investigation
-
-1. Open **The slow strategy join**. It is a real local Kafka run with a deliberately delayed processing-strategy join.
-2. Select the slow **strategy drain** finding. Inspect the native `Waiting for ... to exit` source line. Select its neighboring events in the evidence log.
-3. Open **Compare captures** and choose **Healthy rebalance** as the baseline.
-4. Open **Native logs only**. First processing and successful broker-commit timing correctly become **unknown**.
-5. Open **Incomplete evidence**. A callback without its completion remains incomplete, rather than being declared successful or permanently stuck.
-6. Export a pseudonymized case. Raw messages, names, source paths and absolute dates are removed; partition counts, offsets and relative timing remain.
-
-The 64-consumer case is separately labeled **synthetic**. It exercises navigation, not an actual 64-worker Kafka deployment.
-
-## CLI
+You can also turn the checked-in raw logs into a report without starting the app:
 
 ```bash
-# Parse multiple consumer exports. Timestamps need an explicit timezone.
-undertow analyze consumer-a.jsonl consumer-b.jsonl \
-  --title "Rebalance after deploy" -o incident.json --html incident.html
-
-# Explicitly interpret timezone-less timestamps as UTC, if that is justified.
-undertow analyze workers.log --assume-utc -o incident.json
-
-# Portable output and a descriptive comparison.
-undertow export incident.json --redact -o shareable.json
-undertow export incident.json --redact --format html -o shareable.html
-undertow export incident.json --format mermaid -o sequence.mmd
-undertow compare baseline.json incident.json
+.venv/bin/undertow analyze docs/evidence/lab-final/slow-drain/consumer-*.jsonl \
+  --title "Recorded slow strategy join" \
+  -o /tmp/undertow-incident.json --html /tmp/undertow-incident.html
 ```
 
-`incident.html` contains the viewer, styles and evidence in one file. It works without an HTTP server or external resources. Mermaid export uses generated consumer aliases and is bounded to 250 lifecycle/progress events; JSON retains the complete capture.
+The HTML contains the viewer and evidence in one file. To share a pseudonymized version, use `.venv/bin/undertow export /tmp/undertow-incident.json --redact --format html -o /tmp/undertow-shareable.html`. Review the output: relative timing, offsets and topology counts remain.
 
-## Bring logs, not assumptions
+## Engineering boundaries
 
-Arroyo does not mandate a log envelope. Supply a timezone and consumer identity through JSONL, GCP resource labels, or this plain format:
+- **Known log patterns:** native parsing is pinned to Arroyo 2.46.0. Other timestamped messages remain visible as notes. GCP parsing is format-tested; a production cloud export has not been validated.
+- **Evidence, not inferred health:** assignment does not prove processing, silence does not prove a stall, and a local callback does not prove group-wide stability. Cross-worker alignment assumes synchronized clocks.
+- **Independent implementation:** a standalone local viewer or reusable parser/fixture set is the intended integration path. [Runtime logging](https://github.com/getsentry/arroyo/pull/439), [rebalance tests](https://github.com/getsentry/arroyo/pull/411) and [Rust runtime work](https://github.com/getsentry/arroyo/pull/560) are related upstream efforts. This project has not been adopted by Sentry.
 
-```text
-2026-10-15T12:00:00.000Z INFO [worker-a] arroyo.processing.processor: New partitions assigned: {Partition(topic=Topic(name='events'), index=0): 42}
-```
+The next useful evaluation is a representative sanitized incident: does the timeline answer the on-call question, and which missing observations would make it trustworthy? [Full analysis contract](docs/CONTRACT.md).
 
-```json
-{"timestamp":"2026-10-15T12:00:00.000Z","consumer":"worker-a","group_id":"ingest","logger":"arroyo.processing.processor","message":"New partitions assigned: {Partition(topic=Topic(name='events'), index=0): 42}"}
-```
-
-Optional `instance_id` separates restarts that reuse a consumer name. Group identifiers are included in lane identity. GCP `cluster_name`, `namespace_name`, `pod_name` and `container_name` are combined when no explicit consumer identity is supplied. Separate processes/groups must have distinct identities; Undertow cannot recover missing identity metadata.
-
-See [the complete input and analysis contract](docs/CONTRACT.md) for extension events, offsets, duplicate GCP records, timestamp resolution, bounds and export behavior.
-
-## Why the evidence boundary matters
-
-At pinned Arroyo **2.46.0**, the consumer-configuration helper defaults to auto-commit. The native DEBUG message saying it waited for offsets to be committed can be emitted even when `commit_offsets()` returns `None`, or when there are no staged offsets. **That message is a commit-path observation, not proof of a broker commit.**
-
-Likewise, an assignment is not proof that a message was processed. Silence can mean idle input, missing logs, disabled logging, a crash, or a stall. Undertow reports explicit stuck-detector messages and open callbacks; it does not diagnose silence as a root cause.
-
-Sources: [configuration](https://github.com/getsentry/arroyo/blob/49c24ec2cd0296a11d6d681de14db4f76394ce3e/arroyo/backends/kafka/configuration.py), [consumer commit behavior](https://github.com/getsentry/arroyo/blob/49c24ec2cd0296a11d6d681de14db4f76394ce3e/arroyo/backends/kafka/consumer.py), [processor logs](https://github.com/getsentry/arroyo/blob/49c24ec2cd0296a11d6d681de14db4f76394ce3e/arroyo/processing/processor.py).
-
-## Reproduce the real lab
-
-Docker must be running. The script creates a uniquely named, loopback-published Kafka container and removes it on completion or failure. It installs no daemon and does not connect to your existing Kafka clusters.
-
-```bash
-.venv/bin/pip install -e '.[lab,dev]'
-.venv/bin/python scripts/lab.py --output docs/evidence/reproduction
-.venv/bin/python scripts/build_demo.py
-.venv/bin/python -m pytest -q
-```
-
-The lab uses Apache Kafka 4.1.0 pinned by image digest, Sentry Arroyo 2.46.0, confluent-kafka 2.16.0 and the KIP-848 consumer protocol. Four scenarios each publish 96 IDs across six partitions: healthy rebalance, delayed join, processing crash/replacement, and auto-commit. It checks producer acknowledgments, processing IDs and independently queried broker offsets. The lab's optional instrumentation is explicitly distinguished from native Arroyo logs.
-
-These are bounded local experiments, not a production reliability benchmark or a proof of exactly-once processing. [Full results and limits](docs/VALIDATION.md).
-
-## Architecture
-
-```text
-JSONL / GCP / plain logs
-          │
-     bounded parser        raw source line + structured event
-          │
-  conservative analyzer    assignment epochs + callbacks + evidence coverage
-          │
-   ┌──────┴────────┐
-   CLI         local HTTP app ── local incident library
-   │               │
-   └──────┬────────┘
-          ├── JSON / pseudonymized case
-          ├── Mermaid sequence
-          └── offline HTML / static browser viewer
-```
-
-The Python core is the canonical parser. The static viewer recomputes derived analysis from normalized events in JavaScript. Cross-runtime parity tests cover correlation, redaction and Mermaid output. Imported bundles cannot supply their own trusted analysis.
-
-## Useful next integrations
-
-The intended adoption path is a small parser/event contract and fixture set that maintainers can reuse, or a standalone local viewer for exported incidents. Existing [runtime logging work](https://github.com/getsentry/arroyo/pull/439), [rebalance tests](https://github.com/getsentry/arroyo/pull/411), and the [Rust runtime work](https://github.com/getsentry/arroyo/pull/560) are complementary. Undertow does not claim to replace them or know Sentry's internal tools.
-
-The next useful validation is a representative, appropriately sanitized incident export and feedback on the distinction between cluster-level state and runtime observations. No maintainer acceptance is claimed.
-
-## Development
+## Reproduce and develop
 
 ```bash
 .venv/bin/pip install -e '.[dev]'
-.venv/bin/python -m pytest -q   # Node.js required for browser-engine parity checks
-.venv/bin/python scripts/benchmark.py
+.venv/bin/python -m pytest -q   # Node.js required for browser-engine parity
+
+# Optional: rerun the real lab with Docker running.
+.venv/bin/pip install -e '.[lab]'
+.venv/bin/python scripts/lab.py --output /tmp/undertow-lab
 ```
 
-[Contributing](CONTRIBUTING.md) · [Security and privacy](SECURITY.md) · [Apache-2.0 license](LICENSE)
+The lab creates a disposable, loopback-published broker and removes it on completion or failure. [Experiment details](docs/VALIDATION.md) · [Contributing](CONTRIBUTING.md).
+
+Built by Ivan Balkashynov. Independent project, unaffiliated with Sentry. [Apache-2.0](LICENSE).

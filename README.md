@@ -1,26 +1,28 @@
 # ≈ Undertow
 
-**Investigate Sentry Arroyo consumer incidents from one timeline.**
+**A log viewer for debugging Kafka consumers built with Sentry Arroyo.**
 
-Undertow combines logs from multiple Arroyo workers so an on-call engineer can see when partitions moved, which worker was draining its processing strategy, and what the capture cannot establish. Inspect the original log message and source line behind a timeline event, compare two captures, or export a portable incident report.
+After a restart or rebalance, understanding what happened can mean piecing together logs from several workers. Undertow puts those logs on one interactive timeline. See which worker owned each partition, find long waits, and click an event to read its original log message.
 
-**[Open the recorded investigation](https://balkashynov.github.io/undertow/#workbench)** · [Run on your logs](#run-locally) · [Measured evidence](docs/VALIDATION.md) · [Release](https://github.com/balkashynov/undertow/releases/tag/v0.1.0)
+### [Live demo →](https://balkashynov.github.io/undertow/#workbench)
 
-[![Verify Undertow](https://github.com/balkashynov/undertow/actions/workflows/ci.yml/badge.svg)](https://github.com/balkashynov/undertow/actions/workflows/ci.yml)
+Try the app in your browser with included example logs. No installation or account needed.
 
-> **The example:** a real Arroyo worker takes **3.015 seconds** to join its processing strategy during a rebalance. Undertow identifies `consumer-b`, shows the surrounding partition transitions, and points to the native log lines behind the duration. The workload is synthetic; the Kafka broker, workers and captured logs are real.
+To analyze your own raw logs, follow the [installation instructions](#run-locally).
+
+> **Example:** one worker spends **3 seconds waiting for its processing strategy to finish** during a rebalance. Undertow shows that wait on the timeline and lets you inspect the source logs. This example comes from a real local Kafka/Arroyo run with a deliberately introduced delay and synthetic messages.
 
 [![Timeline rendered from the recorded local Kafka experiment: three consumers, a long revocation on consumer-b, and a 3.015-second strategy join. Click to open the interactive investigation.](docs/preview.svg)](https://balkashynov.github.io/undertow/#workbench)
 
-## Try the investigation in one minute
+## What to try in the demo
 
-No install, account or Kafka cluster needed. The [browser workbench](https://balkashynov.github.io/undertow/#workbench) opens **01 · The slow strategy join**.
+The [demo](https://balkashynov.github.io/undertow/#workbench) opens **01 · The slow strategy join**.
 
 1. Select the **STRATEGY DRAIN** finding showing **3.015s**. The inspector opens `consumer-b.jsonl:93`, the native `Waiting for ... to exit` message.
 2. Open **Compare captures** and select **02 · Healthy rebalance**. Compare the observed revocation duration with the delayed capture.
 3. Select **05 · Native logs only**, then **Timeline**. Processing and successful broker-commit timing become **unknown** because that evidence is absent.
 
-The demo is a viewer over saved executions. It does not start a broker or replay a live incident. [Longer walkthrough and CLI usage](docs/USAGE.md).
+The demo displays saved logs from test runs. [User guide and command-line examples](docs/USAGE.md).
 
 ## When would you use it?
 
@@ -47,6 +49,8 @@ The project addresses the log-timeline workflow described in [Sentry Arroyo #461
 The hosted viewer accepts **Undertow JSON bundles**. Raw-log parsing, persistent storage and standalone HTML export run in the local app or CLI. Imported bundles are validated and their analysis is recomputed.
 
 ## Evidence you can inspect
+
+[![Test status](https://github.com/balkashynov/undertow/actions/workflows/ci.yml/badge.svg)](https://github.com/balkashynov/undertow/actions/workflows/ci.yml)
 
 The recorded lab uses **Apache Kafka 4.1.0 and Arroyo 2.46.0**, with six partitions and 96 message IDs per scenario.
 
@@ -106,4 +110,4 @@ The next useful evaluation is a representative sanitized incident: does the time
 
 The lab creates a disposable, loopback-published broker and removes it on completion or failure. [Experiment details](docs/VALIDATION.md) · [Contributing](CONTRIBUTING.md).
 
-Built by Ivan Balkashynov. Independent project, unaffiliated with Sentry. [Apache-2.0](LICENSE).
+Built by Ivan Balkashynov. Independent project, unaffiliated with Sentry. [Downloads](https://github.com/balkashynov/undertow/releases/tag/v0.1.0) · [Apache-2.0](LICENSE).
